@@ -12,7 +12,7 @@ module.exports.load = async function (app, db) {
     if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname)) if (!req.session.userinfo || !req.session.pterodactyl) return res.redirect("/login");
     if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
       ejs.renderFile(
-        `./Public/${theme.name}/${theme.settings.notfound}`,
+        `./Public/Themes/${theme.name}/${theme.settings.notfound}`,
         await eval(indexjs.renderdataeval),
         null,
         async function (err, str) {
@@ -54,7 +54,7 @@ module.exports.load = async function (app, db) {
           };
 
           ejs.renderFile(
-            `./Public/${theme.name}/${theme.settings.index}`,
+            `./Public/Themes/${theme.name}/${theme.settings.index}`,
             await eval(indexjs.renderdataeval),
             null,
             function (err, str) {
@@ -70,7 +70,7 @@ module.exports.load = async function (app, db) {
       return;
     };
     ejs.renderFile(
-      `./Public/${theme.name}/${theme.settings.index}`,
+      `./Public/Themes/${theme.name}/${theme.settings.index}`,
       await eval(indexjs.renderdataeval),
       null,
       function (err, str) {

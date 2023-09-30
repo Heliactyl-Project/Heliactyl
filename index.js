@@ -1,5 +1,5 @@
 //
-// Heliactyl 13.1.2, Codename Srydenless
+// Heliactyl 13.2.0, Codename Helium
 // 
 //  * Copyright Ghostload
 //  * Please read the "License" file
@@ -213,7 +213,7 @@ app.all("*", async (req, res) => {
   if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname)) if (!req.session.userinfo || !req.session.pterodactyl) return res.redirect("/login" + (req._parsedUrl.pathname.slice(0, 1) == "/" ? "?redirect=" + req._parsedUrl.pathname.slice(1) : ""));
   if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
     ejs.renderFile(
-      `./Public/${theme.name}/${theme.settings.notfound}`,
+      `./Public/Themes/${theme.name}/${theme.settings.notfound}`,
       await eval(indexjs.renderdataeval),
       null,
       async function (err, str) {
@@ -257,7 +257,7 @@ app.all("*", async (req, res) => {
         };
 
         ejs.renderFile(
-          `./Public/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`,
+          `./Public/Themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`,
           await eval(indexjs.renderdataeval),
           null,
           function (err, str) {
@@ -276,7 +276,7 @@ app.all("*", async (req, res) => {
   };
   const data = await eval(indexjs.renderdataeval)
   ejs.renderFile(
-    `./Public/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`,
+    `./Public/Themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`,
     data,
     null,
     function (err, str) {
@@ -297,14 +297,14 @@ module.exports.get = function (req) {
   let tname = encodeURIComponent(getCookie(req, "theme"));
   let name = (
     tname ?
-      fs.existsSync(`./Public/${tname}`) ?
+      fs.existsSync(`./Public/Themes/${tname}`) ?
         tname
         : defaulttheme
       : defaulttheme
   )
   return {
     settings: (
-      fs.existsSync(`./Public/${name}/pages.json`) ?
+      fs.existsSync(`./Public/Themes/${name}/pages.json`) ?
         JSON.parse(fs.readFileSync(`./Public/${name}/pages.json`).toString())
         : defaultthemesettings
     ),

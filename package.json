@@ -1,6 +1,6 @@
 {
   "name": "heliactyl",
-  "version": "13.1.2",
+  "version": "13.2.0",
   "description": "Manage your Pterodactyl Users and their Servers with ease",
   "main": "index.js",
   "author": "Heliactyl-Project / Ghostload",

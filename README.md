@@ -1,4 +1,4 @@
-![Heliactyl](https://cdn.discordapp.com/attachments/987734229469253674/1000790022263423116/Copy_of_citric_3.png)
+![Heliactyl](https://media.discordapp.net/attachments/1000768414220038204/1157727962569900192/Heliactyl-preview.png)
 
 <hr>
 
@@ -21,7 +21,7 @@ All features:
 
 # Warning
 
-We cannot force you to keep the "Powered by Heliactyl" in the footer, but please consider keeping it. It helps getting more visibility to the project and so getting better. We won't do technical support for installations without the notice in the footer. We may file a DMCA takedown if the website using our Software shares false information or proclaims to be the Software Developers.
+We cannot force you to keep the "Powered by Heliactyl" in the footer, but please consider keeping it. It helps getting more visibility to the project and so getting better. We won't provide technical support for installations without the notice in the footer. We may file a DMCA takedown if the website using our Software shares false information or proclaims to be the Software Developers.
 
 We kindly ask you to keep the footer :)
 

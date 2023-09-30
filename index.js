@@ -305,7 +305,7 @@ module.exports.get = function (req) {
   return {
     settings: (
       fs.existsSync(`./Public/Themes/${name}/pages.json`) ?
-        JSON.parse(fs.readFileSync(`./Public//Themes${name}/pages.json`).toString())
+        JSON.parse(fs.readFileSync(`./Public/Themes${name}/pages.json`).toString())
         : defaultthemesettings
     ),
     name: name

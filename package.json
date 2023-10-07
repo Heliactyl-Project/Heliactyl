@@ -23,8 +23,8 @@
     "keyv": "^4.0.4",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.6",
-    "nodemon": "^2.0.15",
     "stripe": "^13.8.0",
+    "nodemon": "^3.0.1",
     "warn": "^1.0.1"
   },
   "scripts": {

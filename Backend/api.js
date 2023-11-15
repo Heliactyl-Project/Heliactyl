@@ -410,7 +410,7 @@ app.post("/api/createcoupon", async (req, res) => {
     }
     let theme = indexjs.get(req);
     ejs.renderFile(
-      `./Public/${theme.name}/${theme.settings.notfound}`,
+      `./Public/Themes/${theme.name}/${theme.settings.notfound}`,
       await eval(indexjs.renderdataeval),
       null,
       function (err, str) {

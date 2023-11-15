@@ -588,7 +588,7 @@ module.exports.load = async function(app, db) {
 
     async function four0four(req, res, theme) {
         ejs.renderFile(
-            `./Public/${theme.name}/${theme.settings.notfound}`, 
+            `./Public/Themes/${theme.name}/${theme.settings.notfound}`, 
             await eval(indexjs.renderdataeval),
             null,
         function (err, str) {

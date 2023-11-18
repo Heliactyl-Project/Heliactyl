@@ -6,12 +6,14 @@ This section outlines which versions of the project are currently supported with
 
 | Version | Supported          |
 | ------- | ------------------ |
+| pre-13.3.x  | :white_check_mark: |
+| 13.2.x  | :white_check_mark: |
 | 13.1.x  | :white_check_mark: |
 | 12.7.x  | :warning:          |
 | 11.0.x  | :x:                |
 | > 11.0  | :x:                |
 
-- **13.1.x:** This version is currently supported and will receive timely security updates.
+- **13.1.x - 13.3.x:** These versions are currently supported and will receive security updates and feature updates.
 
 - **12.7.x:** This version is supported, but with some security concerns. We recommend users to upgrade to a more recent version if possible.
 

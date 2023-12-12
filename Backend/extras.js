@@ -4,14 +4,18 @@ const fs = require('fs');
 const indexjs = require("../index.js");
 const fetch = require('node-fetch');
 
-module.exports.load = async function(app, db) {
+module.exports.load = async function (app, db) {
+
+
+  // Redirecting req to configured Pterodactyl Domain
   app.get("/panel", async (req, res) => {
     res.redirect(settings.pterodactyl.domain);
   });
 
+  // Reset Users Password
   app.get("/regen", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
-    
+
     let newsettings = JSON.parse(fs.readFileSync("./settings.json"));
 
     if (newsettings.api.client.allow.regen !== true) return res.send("You cannot regenerate your password currently.");
@@ -38,7 +42,7 @@ module.exports.load = async function(app, db) {
     );
 
     let theme = indexjs.get(req);
-    res.redirect("/credentials")
+    res.redirect(theme.settings.redirect.regenpassword);
   });
 };
 
@@ -47,7 +51,7 @@ function makeid(length) {
   let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
 }

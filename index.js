@@ -1,5 +1,5 @@
 //
-// Heliactyl 13.2.1, Codename Helium
+// Heliactyl 13.3.0, Codename Lithium
 // 
 //  * Copyright Ghostload
 //  * Please read the "License" file
@@ -13,6 +13,8 @@ const fs = require("fs");
 const fetch = require('node-fetch');
 const chalk = require("chalk");
 const axios = require("axios");
+const os = require('os');
+const gradient = require('gradient-string');
 const arciotext = require('./System/arciotext')
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -64,7 +66,7 @@ module.exports.renderdataeval =
       theme: theme.name,
       extra: theme.settings.variables,
       addons: theme.settings.addons,
-	  db: db
+	    db: db
     };
     if (newsettings.api.arcio.enabled == true && req.session.arcsessiontoken) {
       renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(\`
@@ -127,48 +129,22 @@ const listener = app.listen(settings.website.port, function () {
   console.log(chalk.white("                                                                   "));
   console.log(chalk.white("                                                                   "));
   console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉"));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.green("        Well done! Your Heliactyl instance is now online           "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("   If you experience a 502 Bad Gateway error, please note that     "));
-  console.log(chalk.white("        this is a proxy issue, not an issue with Heliactyl         "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉"));
+  console.log(gradient.retro("\u2588\u2588\u2557  \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2557     \u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2557   \u2588\u2588\u2557\u2588\u2588\u2557     \r\n\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D\u2588\u2588\u2551     \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u2550\u2588\u2588\u2554\u2550\u2550\u255D\u255A\u2588\u2588\u2557 \u2588\u2588\u2554\u255D\u2588\u2588\u2551     \r\n\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2551     \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551        \u2588\u2588\u2551    \u255A\u2588\u2588\u2588\u2588\u2554\u255D \u2588\u2588\u2551     \r\n\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u255D  \u2588\u2588\u2551     \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2551        \u2588\u2588\u2551     \u255A\u2588\u2588\u2554\u255D  \u2588\u2588\u2551     \r\n\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u255A\u2588\u2588\u2588\u2588\u2588\u2588\u2557   \u2588\u2588\u2551      \u2588\u2588\u2551   \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\r\n\u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D \u255A\u2550\u2550\u2550\u2550\u2550\u255D   \u255A\u2550\u255D      \u255A\u2550\u255D   \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D"));
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("🚀 Welcome to Heliactyl 13.3!🚀");
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("🔧 Server Specifications:");
+  console.log(`   - CPU: ${os.cpus()[0].model} (${os.cpus().length} Cores)`);
+  console.log(`   - RAM: ${Math.round(os.totalmem() / (1024 ** 3))}GB`);
+  console.log(`   - Disk: ${Math.round(os.totalmem() / (1024 ** 3))}GB`);
+  console.log(`   - OS: ${os.type()} ${os.release()}`);
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("📝 Sidenote: If you ever encounter a 502 Bad Gateway error,");
+  console.log("   remember it's likely a proxy issue, not Heliactyl itself.");
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("📧 Need assistance? Feel free to contact us via our Discord Server: https://discord.gg/SE8GvAckWN");
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
 });
 
 var cache = false;

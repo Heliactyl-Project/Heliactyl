@@ -13,21 +13,9 @@ module.exports.load = async function(app, db) {
 
     let couponinfo = await db.get("coupon-" + code);
 
-    /*
-    {
-      ram: x,
-      disk: x,
-      cpu: x,
-      servers: x,
-      coins: x
-    }
-    */
-
     if (!couponinfo) return res.redirect(theme.settings.redirect.missingorinvalidcouponcode + "?err=INVALIDCOUPONCODE");
 
     await db.delete("coupon-" + code);
-
-    //
 
     let extra = await db.get("extra-" + req.session.userinfo.id) || {
       ram: 0,
@@ -41,14 +29,16 @@ module.exports.load = async function(app, db) {
     if (couponinfo.cpu) extra.cpu = extra.cpu + couponinfo.cpu;
     if (couponinfo.servers) extra.servers = extra.servers + couponinfo.servers;
 
+
+    // Limiting CPU,RAM,DISK and Servers to 999999999999
+    // Why should anyone use more than 999999999999999? - Ghostload
     if (extra.ram > 999999999999999) extra.ram = 999999999999999;
     if (extra.disk > 999999999999999) extra.disk = 999999999999999;
     if (extra.cpu > 999999999999999) extra.cpu = 999999999999999;
     if (extra.servers > 999999999999999) extra.servers = 999999999999999;
 
+    
     await db.set("extra-" + req.session.userinfo.id, extra);
-
-    //
 
     let coins = await db.get("coins-" + req.session.userinfo.id) || 0;
     coins = coins + couponinfo.coins;

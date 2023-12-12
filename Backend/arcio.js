@@ -5,7 +5,7 @@ const chalk = require("chalk");
 
 let currentlyonpage = {};
 
-module.exports.load = async function(app, db) {
+module.exports.load = async function (app, db) {
   app.get("/arc-sw.js", async (req, res) => {
     let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
     if (newsettings.api.arcio.enabled == true) {
@@ -14,18 +14,18 @@ module.exports.load = async function(app, db) {
     } else {
       let theme = indexjs.get(req);
       ejs.renderFile(
-        `./Public/${theme.name}/${theme.settings.notfound}`, 
+        `./Public/${theme.name}/${theme.settings.notfound}`,
         await eval(indexjs.renderdataeval),
         null,
-      async function (err, str) {
-        delete req.session.newaccount;
-        if (err) {
-          console.log(`Warning: An error occured while loading route ${req._parsedUrl.pathname}:`);
-          console.log(err);
-          return res.send("Failed to load page. The error has been logged to the console.");
-        };
-        return res.send(str);
-      });
+        async function (err, str) {
+          delete req.session.newaccount;
+          if (err) {
+            console.log(`Warning: An error occured while loading route ${req._parsedUrl.pathname}:`);
+            console.log(err);
+            return res.send("Failed to load page. The error has been logged to the console.");
+          };
+          return res.send(str);
+        });
     }
   });
 
@@ -53,7 +53,7 @@ module.exports.load = async function(app, db) {
     currentlyonpage[req.session.userinfo.id] = true;
 
     let coinloop = setInterval(
-      async function() {
+      async function () {
         let usercoins = await db.get("coins-" + req.session.userinfo.id);
         usercoins = usercoins ? usercoins : 0;
         usercoins = usercoins + newsettings.api.arcio["afk page"].coins;
@@ -62,7 +62,7 @@ module.exports.load = async function(app, db) {
       }, newsettings.api.arcio["afk page"].every * 1000
     );
 
-    ws.onclose = async() => {
+    ws.onclose = async () => {
       clearInterval(coinloop);
       delete currentlyonpage[req.session.userinfo.id];
     }

@@ -73,7 +73,7 @@ module.exports.load = async function (app, db) {
 
         res.redirect(`/lv?success=true`)
     })
-    
+
     app.get(`/api/lvcooldown`, async (req, res) => {
         if (!req.session.pterodactyl) return res.json({ error: true, message: 'Not logged in' })
 

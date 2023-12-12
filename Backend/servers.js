@@ -82,7 +82,7 @@ module.exports.load = async function (app, db) {
           }
 
           let name = decodeURIComponent(req.query.name);
-          if (name.length < 1) { 
+          if (name.length < 1) {
             cb()
             return res.redirect(`${redirectlink}?err=LITTLESERVERNAME`);
           }
@@ -173,7 +173,7 @@ module.exports.load = async function (app, db) {
               port_range: []
             }
             specs.deploy.locations = [location];
-            
+
             // Make sure user has enough coins
             const createdServer = await db.get(`createdserver-${req.session.userinfo.id}`)
             const createdStatus = createdServer ?? false
@@ -202,7 +202,7 @@ module.exports.load = async function (app, db) {
             let newpterodactylinfo = req.session.pterodactyl;
             newpterodactylinfo.relationships.servers.data.push(serverinfotext);
             req.session.pterodactyl = newpterodactylinfo;
-            
+
             // Bill user if they have created a server before
             if (createdStatus) {
               await db.set("coins-" + req.session.userinfo.id, coins - cost)

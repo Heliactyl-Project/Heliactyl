@@ -3,7 +3,7 @@ const adminjs = require("./admin.js");
 const fs = require("fs");
 const ejs = require("ejs");
 const fetch = require('node-fetch');
-const NodeCache = require( "node-cache" );
+const NodeCache = require("node-cache");
 const Queue = require("../Queue/Main.js");
 const myCache = new NodeCache({ deleteOnExpire: true, stdTTL: 59 });
 const log = require('../Components/log')
@@ -11,12 +11,17 @@ const log = require('../Components/log')
 module.exports.load = async function (app, db) {
   app.get("/api", async (req, res) => {
     let settings = await check(req, res);
-    if (!settings) return;
-    res.send(
-      {
-        "status": true
-      }
-    );
+    if (!settings) {
+      res.status(503).send({
+        status: false,
+        message: "The API is disabled. Please check your configuration.",
+      });
+      return;
+    }
+    res.send({
+      status: true,
+      message: "The API is enabled.",
+    });
   });
 
   app.get("/api/userinfo", async (req, res) => {
@@ -40,11 +45,11 @@ module.exports.load = async function (app, db) {
 
     let packagename = await db.get("package-" + req.query.id);
     let package = newsettings.api.client.packages.list[packagename ? packagename : newsettings.api.client.packages.default];
-    if (!package) package = {	
-      ram: 0,	
-      disk: 0,	
-      cpu: 0,	
-      servers: 0	
+    if (!package) package = {
+      ram: 0,
+      disk: 0,
+      cpu: 0,
+      servers: 0
     };
     package["name"] = packagename;
 
@@ -73,38 +78,38 @@ module.exports.load = async function (app, db) {
         cpu: 0,
         servers: 0
       },
-      userinfo: userinfo,	
+      userinfo: userinfo,
       coins: newsettings.api.client.coins.enabled == true ? (await db.get("coins-" + req.query.id) ? await db.get("coins-" + req.query.id) : 0) : null
     });
   });
-    
-  app.post("/api/setcoins", async (req, res) => {	
-    let settings = await check(req, res);	
-    if (!settings) return;	
-    if (typeof req.body !== "object") return res.send({status: "body must be an object"});	
-    if (Array.isArray(req.body)) return res.send({status: "body cannot be an array"});	
-    let id = req.body.id;	
-    let coins = req.body.coins;	
-    if (typeof id !== "string") return res.send({status: "id must be a string"});	
-    if (!(await db.get("users-" + id))) return res.send({status: "invalid id"});	
-    if (typeof coins !== "number") return res.send({status: "coins must be number"});	
-    if (coins < 0 || coins > 999999999999999) return res.send({status: "too small or big coins"});	
-    if (coins == 0) {	
-      await db.delete("coins-" + id)	
-    } else {	
-      await db.set("coins-" + id, coins);	
-    }	
-    res.send({status: "success"});	
+
+  app.post("/api/setcoins", async (req, res) => {
+    let settings = await check(req, res);
+    if (!settings) return;
+    if (typeof req.body !== "object") return res.send({ status: "body must be an object" });
+    if (Array.isArray(req.body)) return res.send({ status: "body cannot be an array" });
+    let id = req.body.id;
+    let coins = req.body.coins;
+    if (typeof id !== "string") return res.send({ status: "id must be a string" });
+    if (!(await db.get("users-" + id))) return res.send({ status: "invalid id" });
+    if (typeof coins !== "number") return res.send({ status: "coins must be number" });
+    if (coins < 0 || coins > 999999999999999) return res.send({ status: "too small or big coins" });
+    if (coins == 0) {
+      await db.delete("coins-" + id)
+    } else {
+      await db.set("coins-" + id, coins);
+    }
+    res.send({ status: "success" });
   });
-    
+
   app.get("/api/updateCoins", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
     let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
     let userinfo = req.session.userinfo
     let b = await db.get(`coins-${req.session.userinfo.id}`)
-    if(myCache.get(`coins_${userinfo.id}`) == true) return res.send({coins: b});
+    if (myCache.get(`coins_${userinfo.id}`) == true) return res.send({ coins: b });
     myCache.set(`coins_${userinfo.id}`, true, 59);
-    if(await db.get(`coins-${req.session.userinfo.id}`) == null) {
+    if (await db.get(`coins-${req.session.userinfo.id}`) == null) {
       await db.set(`coins-${req.session.userinfo.id}`, 0)
     } else {
       let e = await db.get(`coins-${req.session.userinfo.id}`)
@@ -112,15 +117,15 @@ module.exports.load = async function (app, db) {
       await db.set(`coins-${req.session.userinfo.id}`, e)
     }
     let a = await db.get(`coins-${req.session.userinfo.id}`)
-    res.send({coins: a})
+    res.send({ coins: a })
   })
 
-app.post("/api/createcoupon", async (req, res) => {
+  app.post("/api/createcoupon", async (req, res) => {
     let settings = await check(req, res);
     if (!settings) return;
 
-    if (typeof req.body !== "object") return res.send({status: "body must be an object"});
-    if (Array.isArray(req.body)) return res.send({status: "body cannot be an array"});
+    if (typeof req.body !== "object") return res.send({ status: "body must be an object" });
+    if (Array.isArray(req.body)) return res.send({ status: "body cannot be an array" });
 
     let code = typeof req.body.code == "string" ? req.body.code.slice(0, 200) : Math.random().toString(36).substring(2, 15);
 
@@ -155,8 +160,8 @@ app.post("/api/createcoupon", async (req, res) => {
     let settings = await check(req, res);
     if (!settings) return;
 
-    if (typeof req.body !== "object") return res.send({status: "body must be an object"});
-    if (Array.isArray(req.body)) return res.send({status: "body cannot be an array"});
+    if (typeof req.body !== "object") return res.send({ status: "body must be an object" });
+    if (Array.isArray(req.body)) return res.send({ status: "body cannot be an array" });
 
     let code = req.body.code;
 
@@ -169,7 +174,7 @@ app.post("/api/createcoupon", async (req, res) => {
     await db.delete("coupon-" + code);
 
     res.json({ status: "success" })
-});
+  });
 
 
   app.post("/api/setplan", async (req, res) => {
@@ -289,7 +294,7 @@ app.post("/api/createcoupon", async (req, res) => {
         cb()
         return res.redirect(`/gift?err=CANTAFFORD`)
       }
-  
+
       await db.set(`coins-${req.query.id}`, othercoins + coins)
       await db.set(`coins-${req.session.userinfo.id}`, usercoins - coins)
 
@@ -390,7 +395,7 @@ app.post("/api/createcoupon", async (req, res) => {
         extra1.servers = extra1.servers - servers
         extra2.servers = extra2.servers + servers
       }
-	  
+
       db.set("extra-" + req.session.userinfo.id, extra1)
       db.set("extra-" + req.query.id, extra2)
 

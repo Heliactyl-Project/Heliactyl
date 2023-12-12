@@ -5,7 +5,7 @@ const fs = require("fs");
 const ejs = require("ejs");
 const log = require('../Components/log')
 
-module.exports.load = async function(app, db) {
+module.exports.load = async function (app, db) {
   let maxram = null;
   let maxcpu = null;
   let maxservers = null;
@@ -14,7 +14,7 @@ module.exports.load = async function(app, db) {
     let newsettings = await enabledCheck(req, res);
     if (newsettings) {
       let amount = req.query.amount;
-      
+
       if (!amount) return res.send("missing amount");
 
       amount = parseFloat(amount);
@@ -22,16 +22,16 @@ module.exports.load = async function(app, db) {
       if (isNaN(amount)) return res.send("amount is not a number");
 
       if (amount < 1 || amount > 10) return res.send("amount must be 1-10");
-      
+
       let theme = indexjs.get(req);
       let failedcallback = theme.settings.redirect.failedpurchaseram ? theme.settings.redirect.failedpurchaseram : "/";
 
       let usercoins = await db.get("coins-" + req.session.userinfo.id);
       usercoins = usercoins ? usercoins : 0;
-        
+
       let ramcap = await db.get("ram-" + req.session.userinfo.id);
       ramcap = ramcap ? ramcap : 0;
-        
+
       if (ramcap + amount > settings.storelimits.ram) return res.redirect(failedcallback + "?err=MAXRAMEXCEETED");
 
       let per = newsettings.api.client.coins.store.ram.per * amount;
@@ -41,7 +41,7 @@ module.exports.load = async function(app, db) {
 
       let newusercoins = usercoins - cost;
       let newram = ramcap + amount;
-      if(newram > settings.storelimits.ram) return res.send("You reached max ram limit!");
+      if (newram > settings.storelimits.ram) return res.send("You reached max ram limit!");
       if (newusercoins == 0) {
         await db.delete("coins-" + req.session.userinfo.id);
         await db.set("ram-" + req.session.userinfo.id, newram);
@@ -86,16 +86,16 @@ module.exports.load = async function(app, db) {
       if (isNaN(amount)) return res.send("amount is not a number");
 
       if (amount < 1 || amount > 10) return res.send("amount must be 1-10");
-      
+
       let theme = indexjs.get(req);
       let failedcallback = theme.settings.redirect.failedpurchasedisk ? theme.settings.redirect.failedpurchasedisk : "/";
 
       let usercoins = await db.get("coins-" + req.session.userinfo.id);
       usercoins = usercoins ? usercoins : 0;
-        
+
       let diskcap = await db.get("disk-" + req.session.userinfo.id);
       diskcap = diskcap ? diskcap : 0;
-        
+
       if (diskcap + amount > settings.storelimits.disk) return res.redirect(failedcallback + "?err=MAXDISKEXCEETED");
 
       let per = newsettings.api.client.coins.store.disk.per * amount;
@@ -105,7 +105,7 @@ module.exports.load = async function(app, db) {
 
       let newusercoins = usercoins - cost;
       let newdisk = diskcap + amount;
-      if(newdisk > settings.storelimits.disk) return res.send("You reached max disk limit!");
+      if (newdisk > settings.storelimits.disk) return res.send("You reached max disk limit!");
       if (newusercoins == 0) {
         await db.delete("coins-" + req.session.userinfo.id);
         await db.set("disk-" + req.session.userinfo.id, newdisk);
@@ -150,16 +150,16 @@ module.exports.load = async function(app, db) {
       if (isNaN(amount)) return res.send("amount is not a number");
 
       if (amount < 1 || amount > 10) return res.send("amount must be 1-10");
-      
+
       let theme = indexjs.get(req);
       let failedcallback = theme.settings.redirect.failedpurchasecpu ? theme.settings.redirect.failedpurchasecpu : "/";
 
       let usercoins = await db.get("coins-" + req.session.userinfo.id);
       usercoins = usercoins ? usercoins : 0;
-        
+
       let cpucap = await db.get("cpu-" + req.session.userinfo.id);
       cpucap = cpucap ? cpucap : 0;
-        
+
       if (cpucap + amount > settings.storelimits.cpu) return res.redirect(failedcallback + "?err=MAXCPUEXCEETED");
 
       let per = newsettings.api.client.coins.store.cpu.per * amount;
@@ -169,7 +169,7 @@ module.exports.load = async function(app, db) {
 
       let newusercoins = usercoins - cost;
       let newcpu = cpucap + amount;
-      if(newcpu > settings.storelimits.cpu) return res.send("Reached max CPU limit!");
+      if (newcpu > settings.storelimits.cpu) return res.send("Reached max CPU limit!");
       if (newusercoins == 0) {
         await db.delete("coins-" + req.session.userinfo.id);
         await db.set("cpu-" + req.session.userinfo.id, newcpu);
@@ -214,16 +214,16 @@ module.exports.load = async function(app, db) {
       if (isNaN(amount)) return res.send("amount is not a number");
 
       if (amount < 1 || amount > 10) return res.send("amount must be 1-10");
-      
+
       let theme = indexjs.get(req);
       let failedcallback = theme.settings.redirect.failedpurchaseservers ? theme.settings.redirect.failedpurchaseservers : "/";
 
       let usercoins = await db.get("coins-" + req.session.userinfo.id);
       usercoins = usercoins ? usercoins : 0;
-        
+
       let serverscap = await db.get("servers-" + req.session.userinfo.id);
       serverscap = serverscap ? serverscap : 0;
-        
+
       if (serverscap + amount > settings.storelimits.servers) return res.redirect(failedcallback + "?err=MAXSERVERSEXCEETED");
 
       let per = newsettings.api.client.coins.store.servers.per * amount;
@@ -233,7 +233,7 @@ module.exports.load = async function(app, db) {
 
       let newusercoins = usercoins - cost;
       let newservers = serverscap + amount;
-      if(newservers > settings.storelimits.servers) return res.send("Reached max server limit!");
+      if (newservers > settings.storelimits.servers) return res.send("Reached max server limit!");
       if (newusercoins == 0) {
         await db.delete("coins-" + req.session.userinfo.id);
         await db.set("servers-" + req.session.userinfo.id, newservers);
@@ -271,19 +271,19 @@ module.exports.load = async function(app, db) {
     if (newsettings.api.client.coins.store.enabled == true) return newsettings;
     let theme = indexjs.get(req);
     ejs.renderFile(
-      `./Public/Themes/${theme.name}/${theme.settings.notfound}`, 
+      `./Public/Themes/${theme.name}/${theme.settings.notfound}`,
       await eval(indexjs.renderdataeval),
       null,
-    function (err, str) {
-      delete req.session.newaccount;
-      if (err) {
-        console.log(`Warning: An error occured while loading route ${req._parsedUrl.pathname}:`);
-        console.log(err);
-        return res.send("Failed to load page. The error has been logged to the console.");
-      };
-      res.status(200);
-      res.send(str);
-    });
+      function (err, str) {
+        delete req.session.newaccount;
+        if (err) {
+          console.log(`Warning: An error occured while loading route ${req._parsedUrl.pathname}:`);
+          console.log(err);
+          return res.send("Failed to load page. The error has been logged to the console.");
+        };
+        res.status(200);
+        res.send(str);
+      });
     return null;
   }
 }

@@ -19,12 +19,14 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "express-ws": "^4.0.0",
+    "gradient-string": "^2.0.2",
     "javascript-obfuscator": "^2.19.1",
     "keyv": "^4.0.4",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.6",
     "nodemon": "^3.0.1",
     "stripe": "^9.4.0",
+    "vm": "^0.1.0",
     "warn": "^1.0.1"
   },
   "scripts": {

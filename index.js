@@ -43,12 +43,33 @@ const defaultthemesettings = {
   variables: {}
 };
 
+
 module.exports.renderdataeval =
   `(async () => {
    let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
-	const JavaScriptObfuscator = require('javascript-obfuscator');
+   	const JavaScriptObfuscator = require('javascript-obfuscator');
+      const fs = require('fs');
+      const addonHandlerCode = fs.readFileSync('./Backend/AddonHandler.js', 'utf-8');
 
- 
+      // Create a context to execute the code
+      const addonHandlerContext = {
+      require: require, // Provide the require function
+      console: console // Provide the console object if needed
+      };
+
+      // Explicitly declare module within the context
+      addonHandlerContext.module = { exports: {} };
+
+      // Execute the code with a new context
+      const vm = require('vm');
+      vm.createContext(addonHandlerContext);
+      vm.runInContext(addonHandlerCode, addonHandlerContext);
+
+      // Access the loaded AddonHandler
+      const AddonHandler = addonHandlerContext.module.exports;
+
+      AddonHandler.load(app, db);
+
     let renderdata = {
       req: req,
       settings: newsettings,
@@ -65,7 +86,7 @@ module.exports.renderdataeval =
       pterodactyl: req.session.pterodactyl,
       theme: theme.name,
       extra: theme.settings.variables,
-      addons: theme.settings.addons,
+      addons: AddonHandler.getAddons(),
 	    db: db
     };
     if (newsettings.api.arcio.enabled == true && req.session.arcsessiontoken) {
@@ -119,6 +140,7 @@ app.use(express.json({
   type: 'application/json',
   verify: undefined
 }));
+console.log(indexjs.AddonHandler);
 
 const listener = app.listen(settings.website.port, function () {
   console.log(chalk.white("                                                                   "));
@@ -177,8 +199,11 @@ app.use(function (req, res, next) {
 let apifiles = fs.readdirSync('./Backend').filter(file => file.endsWith('.js'));
 
 apifiles.forEach(file => {
-  let apifile = require(`./Backend/${file}`);
-  apifile.load(app, db);
+  if (file !== 'AddonHandler.js') {
+    let apifile = require(`./Backend/${file}`);
+    console.log(chalk.green(`Loaded API File: ${file}`));
+    apifile.load(app, db);
+  }
 });
 
 app.all("*", async (req, res) => {

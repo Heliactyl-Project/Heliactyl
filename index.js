@@ -12,7 +12,6 @@
 const fs = require("fs");
 const fetch = require('node-fetch');
 const chalk = require("chalk");
-const axios = require("axios");
 const os = require('os');
 const gradient = require('gradient-string');
 const arciotext = require('./System/arciotext')
@@ -93,7 +92,7 @@ db.on('error', err => {
 
 module.exports.db = db;
 
-// Load websites.
+// Load ExpressJS.
 
 const express = require("express");
 const app = express();

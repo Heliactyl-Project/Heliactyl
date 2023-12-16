@@ -2,7 +2,7 @@
 
 <hr>
 
-# Heliactyl v13
+# Heliactyl v13.3
 
 All features:
 - Resource Management (Use it to create servers, etc)
@@ -10,8 +10,8 @@ All features:
 - Renewal (Require coins for renewal)
 - Coupons (Gives resources & coins to a user)
 - Servers (create, view, edit servers)
-- Payments (buy via stripe)
-- Login Queue (prevent overload)
+- Payments (Buy Coins via Stripe)
+- Login Queue (prevent hitting the rate-limits)
 - User System (auth, regen password, etc)
 - Store (buy resources with coins)
 - Dashboard (view resources)
@@ -29,21 +29,32 @@ We kindly ask you to keep the footer :)
 
 # Install Guide
 
-Warning: You need Pterodactyl already set up on a domain for Heliactyl to work
-1. Upload the file above onto a Pterodactyl NodeJS server [Download the egg from Parkervcp's GitHub Repository](https://github.com/parkervcp/eggs/tree/master/bots/discord/discord.js)
-2. Unarchive the file and set the server to use NodeJS 16
-3. Configure settings.json (specifically panel domain/apikey and discord auth settings for it to work)
-4. Start the server (Ignore the 2 strange errors that might come up)
-5. Login to your DNS manager, point the domain you want your dashboard to be hosted on to your VPS IP address. (Example: dashboard.domain.com 192.168.0.1)
-6. Run `apt install nginx && apt install certbot` on the vps
-7. Run `ufw allow 80` and `ufw allow 443` on the vps
-8. Run `certbot certonly -d <Your Heliactyl Domain>` then do 1 and put your email
-9. Run `nano /etc/nginx/sites-enabled/heliactyl.conf`
-10. Paste the configuration at the bottom of this and replace with the IP of the pterodactyl server including the port and with the domain you want your dashboard to be hosted on.
-11. Run `systemctl restart nginx` and try open your domain.
+**Caution:** Ensure that Pterodactyl is already configured on a domain or else Heliactyl may not function properly.
+
+Access your VPS through SSH and run these Commands:
+
+```bash
+1. sudo apt update -y && sudo apt upgrade -y
+2. sudo apt install nginx
+3. cd /var/www
+4. # Download and unzip the latest Heliactyl release from GitHub into the current folder
+5. curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+   sudo apt-get install -y nodejs
+   # Customize the settings.json file, specifically updating the panel domain, API key, and Discord authentication settings.
+6. node . # Start Heliactyl. Take a look at "Running in background and on startup" if you want Heliactyl to run in the background
+          # Ctrl + C to stop Heliactyl
+7. sudo apt install certbot
+8. sudo ufw allow 80
+9. sudo ufw allow 443
+10. sudo certbot certonly -d <Your Heliactyl Domain>
+11. nano /etc/nginx/sites-enabled/heliactyl.conf
+12. # Copy the Ngnix config from # Nginx Proxy Config and replace <domain> with your domain and <port> with the Port Heliactyl is running on 
+    # (You can find the port in the settings.json)
+13. sudo systemctl restart nginx
+14. # Attempt to access your Heliactyl domain
+
 
 # Nginx Proxy Config
-```Nginx
 server {
     listen 80;
     server_name <domain>;
@@ -80,26 +91,30 @@ server {
 
 # Additional Configuration
 
-Enabling other eggs (Minecraft Bedrock):
-1. [Download the eggs from Parkervcp's GitHub Repository](https://github.com/parkervcp/eggs/tree/master/bots/discord/discord.js)
+#### **Changing the EGG IDs**:
+ Pterodactyl often changes the IDs of the EGGs so you might need to change the IDs in the settings.json to match the Pterodactyl ones
+ You can find the eggs for Minecraft by using `YourPanelDomain.net/admin/nests/view/1`. Replace YourPanelDomain.net with the actual Domain of your Pterodactyl Installation
+
+How to other eggs (Minecraft Bedrock):
+1. [Download the eggs from Parkervcp's GitHub Repository](https://github.com/parkervcp/eggs)
 2. Add the Pocketmine & Vanilla Bedrock eggs to your panel
 3. Get the egg ID of both of them and set it as the ID in settings.json
 
 # Updating 
 
 From Heliactyl v11/v12 or Dashactyl v0.4 to Heliactyl v13:
-1. Store certain things such as your api keys, discord auth settings, etc in a .txt file
-2. Download database.sqlite 
-3. Delete all files off the server (or delete and remake the folder if done in ssh)
+1. Store certain information such as your api keys, discord auth settings, etc in a .txt file or somewhere safe
+2. Download database.sqlite (This is the Database which includes important data about the user and servers) 
+3. Delete all files in the directory of the server (or delete and remake the folder if done in ssh)
 4. Upload the latest Heliactyl v13 release and unzip it
 5. Upload database.sqlite and reconfigure settings.json
 
 Move to a newer Heliactyl v13 release:
 1. Delete everything except settings.json, database.sqlite
-2. Put the files that you didn't delete into a zip file
+2. Download the database.sqlite and Store important details from the settings.json such as your api keys, discord auth settings, etc in a .txt file or somewhere safe
 3. Upload the latest Heliactyl v13 release and unzip it
-4. Remove settings.json and database.sqlite
-5. Unzip the zip with your old settings.json and database.sqlite
+4. reconfigure settings.json and upload your old database.sqlite
+5. All done now start Heliactyl again
 
 # Running in background and on startup
 Installing [pm2](https://github.com/Unitech/pm2):

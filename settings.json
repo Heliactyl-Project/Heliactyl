@@ -105,7 +105,9 @@
         "note": "EXPERIMENTAL! This may or may not work, For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Heliactyl will disable antivpn.",
         "status": false,
         "APIKey": "Proxycheck APIKey",
-        "whitelistedIPs": ["IP address"]
+        "whitelistedIPs": [
+          "IP address"
+        ]
       },
       "packages": {
         "default": "default",
@@ -134,7 +136,7 @@
         }
       },
       "eggs": {
-       "paper": {
+        "paper": {
           "display": "Minecraft Java | Paper/Spigot",
           "minimum": {
             "ram": 1024,
@@ -315,7 +317,7 @@
         "buy ram": true,
         "buy cpu": true,
         "buy disk": true
-      }, 
+      },
       "admin": {
         "set coins": true,
         "add coins": true,
@@ -331,6 +333,8 @@
   "antivpn": {
     "status": false,
     "APIKey": "Proxycheck APIKey",
-    "whitelistedIPs": ["IP address"]
+    "whitelistedIPs": [
+      "IP address"
+    ]
   }
 }

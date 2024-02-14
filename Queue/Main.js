@@ -1,25 +1,31 @@
 class Queue {
     constructor() {
-        this.queue = []
+        this.queue = [];
         this.processing = false;
     }
 
     addJob(job) {
-        this.queue.push(job)
-        this.bumpQueue()
+        this.queue.push(job);
+        if (!this.processing) {
+            this.processQueue();
+        }
     }
 
-    bumpQueue() {
-        if (this.processing) return
-        const job = this.queue.shift()
-        if (!job) return
-        const cb = () => {
-            this.processing = false
-            this.bumpQueue()
+    processQueue() {
+        if (this.processing || this.queue.length === 0) {
+            return;
         }
-        this.processing = true
-        job(cb)
+
+        const job = this.queue.shift();
+        this.processing = true;
+
+        const callback = () => {
+            this.processing = false;
+            this.processQueue();
+        };
+
+        job(callback);
     }
 }
 
-module.exports = Queue
+module.exports = Queue;

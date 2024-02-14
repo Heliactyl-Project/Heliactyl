@@ -74,6 +74,7 @@
           "modify": true,
           "delete": true
         },
+        "giftressources": false,
         "overresourcessuspend": false
       },
       "oauth2": {
@@ -131,7 +132,7 @@
         "1": {
           "name": "Default Location",
           "note": "Heliactyl now uses banners instead of a dropdown, you can use canva.com to create a banner to use. We also have a list of free location banners in the Heliactyl discord.",
-          "banner": "https://cdn.discordapp.com/attachments/987734229469253674/1000713851295256596/Copy_of_citric_2.png",
+          "banner": "/assets/default/img/default.png",
           "package": null
         }
       },
@@ -299,7 +300,7 @@
     "cost": 0
   },
   "renewals": {
-    "note": "Renewals finally work in Heliactyl! Thank you for updating to v12.3.0, The cost is the amount of coins required to renew, and the delay is the amount of days before they need to renew. New servers after the 1st one will also cost the renewal amount",
+    "note": "The cost is the amount of coins required to renew, and the delay is the amount of days before they need to renew. New servers after the 1st one will also cost the renewal amount",
     "status": false,
     "cost": 0,
     "delay": 14

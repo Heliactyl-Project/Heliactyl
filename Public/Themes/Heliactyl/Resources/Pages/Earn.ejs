@@ -68,10 +68,11 @@
 									<h5 class="card-title mb-0">AFK Page</h5>
 								</div>
 								<div class="card-body py-3">
-<h1>You are now earning, well done!</h1>
-<br>
+				<h1>You are now earning, well done!</h1>
+				<br>
                 <p>Every <% if (settings.api.arcio["afk page"].every !== 1) { %><%= settings.api.arcio["afk page"].every %> seconds<% } else { %>second<% } %>, you will get <%= settings.api.arcio["afk page"].coins == 1 ? "a" : settings.api.arcio["afk page"].coins %> coin<%= settings.api.arcio["afk page"].coins == 1 ? "" : "s" %></p>
                 <p>To view your current coin balance, click "View account info" on the navigation bar</p>
+				<span id="arciotimer">30</span> seconds until you recive a Coin
                   <script>
                 <%- arcioafktext %>
             </script>

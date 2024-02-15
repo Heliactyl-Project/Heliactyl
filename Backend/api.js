@@ -310,6 +310,7 @@ module.exports.load = async function (app, db) {
     if (req.query.ram.includes("-")) return res.send("Invalid number.");
     if (req.query.ram.includes("+")) return res.send("Invalid number.");
     let theme = indexjs.get(req);
+    if (!settings.api.client.allow.giftressources) return res.redirect(theme.settings.redirect.giftresources);
 
     let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
     let failredirect = theme.settings.redirect.failedgiftresources ? theme.settings.redirect.failedgiftresources : "/";

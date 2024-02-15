@@ -52,18 +52,18 @@
 									<h5 class="card-title mb-0">Heliactyl Version</h5>
 								</div>
 								<div class="card-body py-3">
-                                    <p id="latestversion"><span>Fetching...</span></p>
+                                    <p id="version"><span>Fetching...</span></p>
                                     <script>
-										// This is just a Temporary solution due issues with our Web Hosting
-                                        fetch("https://rtzui.5687.webhost-05.my-host.network/version")
+                                        fetch("https://heliactyl.com/api/v1/version")
                                             .then(res => Promise.resolve(res.json()).then(ver => {
                                                 let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
                                                 if (ver.version == currentver) {
-                                                    document.getElementById("latestversion").innerHTML = `<span>You are running Heliactyl version <code style="color: #17a2b8" >v${currentver}</code>. Thank you for keeping your Heliactyl instance updated!</span>`;
-                                                } else if (ver.prerelease == currentver) {
-                                                    document.getElementById("latestversion").innerHTML = `<span>You are running Heliactyl version <code style="color: #17a2b8">v${currentver}</code>. Thank you for keeping your Heliactyl instance updated!</span>`;
+													if (ver.prerelease == currentver) {
+														document.getElementById("version").innerHTML = `<span>You are running a PreRelease of Heliactyl, Version <code style="color: #17a2b8">v${currentver}</code>. Thank you for running and Testing Heliactyl's PreRelease version! </span>`;
+													}
+                                                    document.getElementById("version").innerHTML = `<span>You are running Heliactyl version <code style="color: #17a2b8" >v${currentver}</code>. Thank you for keeping your Heliactyl instance updated!</span>`;
                                                 } else {
-                                                    document.getElementById("latestversion").innerHTML = `<span>Uh oh! Heliactyl is <span class="text-danger">not up to date</span>! The latest version is <code style="color: #17a2b8;" >v${ver.version}</code> and you are currently running version <code style="color: #17a2b8" >v<%= settings.version %></code>. We highly suggest updating to make sure you have all the latest security patches & features. <a href="https://gitlab.com/heliactyl/panel/-/archive/master/panel-master.zip" class="text-info">Click here<a> to download the latest version.</span>`;
+                                                    document.getElementById("version").innerHTML = `<span>Uh oh! Heliactyl is <span class="text-danger">not up to date</span>! The latest version is <code style="color: #17a2b8;" >v${ver.version}</code> and you are currently running version <code style="color: #17a2b8" >v<%= settings.version %></code>. We highly suggest updating to make sure you have all the latest security patches & features. <a href="https://github.com/Heliactyl-Project/Heliactyl" class="text-info">Click here<a> to download the latest version.</span>`;
                                                 };
                                             }));
                                     </script>
@@ -199,7 +199,7 @@
 					<div class="row text-muted">
 						<div class="col-4 text-start">
 							<p class="mb-0">
-								<a class="text-muted" target="_blank">© <%= settings.name %> | Powered by <a style="color: white" href="https://gitlab.com/Heliactyl/panel/">Heliactyl</a>
+								<a class="text-muted" target="_blank">© <%= settings.name %> | Powered by <a style="color: white" href="https://github.com/Heliactyl-Project/Heliactyl">Heliactyl</a>
 							</p>
 						</div>
 						<div class="col-8 text-end">

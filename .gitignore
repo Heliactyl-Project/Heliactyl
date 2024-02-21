@@ -128,5 +128,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Heliactyl Specific files 
 package-lock.json
 database.sqlite
+settings.json

@@ -136,6 +136,6 @@ To stop a currently running Heliactyl instance, use `pm2 stop heliactyl`
 
 # Legacy Deprecation Notice
 
-Heliactyl Version v6 to - v12 have now reached their EOL (End Of Life) and should not be used in Production.
+Heliactyl Version v1 to - v12 have now reached their EOL (End Of Life) and should not be used in Production.
 Please update to Heliactyl v12 LTS or v13.
 

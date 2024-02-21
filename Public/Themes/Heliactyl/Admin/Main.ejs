@@ -57,13 +57,12 @@
                                         fetch("https://heliactyl.com/api/v1/version")
                                             .then(res => Promise.resolve(res.json()).then(ver => {
                                                 let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
-                                                if (ver.version == currentver) {
-													if (ver.prerelease == currentver) {
-														document.getElementById("version").innerHTML = `<span>You are running a PreRelease of Heliactyl, Version <code style="color: #17a2b8">v${currentver}</code>. Thank you for running and Testing Heliactyl's PreRelease version! </span>`;
-													}
+												if (ver.prerelease == currentver) {
+														document.getElementById("version").innerHTML = `<span>You are running a <span class="text-warning">PreRelease</span> of Heliactyl, Version <code style="color: #17a2b8">v${currentver}</code>. Thank you for running and Testing Heliactyl's PreRelease version! </span>`;
+												} else if (ver.version == currentver) {
                                                     document.getElementById("version").innerHTML = `<span>You are running Heliactyl version <code style="color: #17a2b8" >v${currentver}</code>. Thank you for keeping your Heliactyl instance updated!</span>`;
                                                 } else {
-                                                    document.getElementById("version").innerHTML = `<span>Uh oh! Heliactyl is <span class="text-danger">not up to date</span>! The latest version is <code style="color: #17a2b8;" >v${ver.version}</code> and you are currently running version <code style="color: #17a2b8" >v<%= settings.version %></code>. We highly suggest updating to make sure you have all the latest security patches & features. <a href="https://github.com/Heliactyl-Project/Heliactyl" class="text-info">Click here<a> to download the latest version.</span>`;
+                                                    document.getElementById("version").innerHTML = `<span>Uh oh! Heliactyl is <span class="text-danger">not up to date</span>! The latest version is <code style="color: #17a2b8;" >v${ver.version}</code> and you are currently running version <code style="color: #17a2b8" >v<%= settings.version %></code>.<br> We highly suggest updating to make sure you have all the latest security patches & features.<br> <a href="https://github.com/Heliactyl-Project/Heliactyl" class="text-info">Click here<a> to download the latest version.</span>`;
                                                 };
                                             }));
                                     </script>

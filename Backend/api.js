@@ -298,7 +298,7 @@ module.exports.load = async function (app, db) {
       await db.set(`coins-${req.query.id}`, othercoins + coins)
       await db.set(`coins-${req.session.userinfo.id}`, usercoins - coins)
 
-      log('Gifted Credits', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins}\ Credits to the user with the ID \`${req.query.id}\`.`)
+      log('gifted coins', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins}\ Coins to the user with the ID \`${req.query.id}\`.`)
       cb()
       return res.redirect(`/gift?success=true`);
 
@@ -417,7 +417,8 @@ module.exports.load = async function (app, db) {
     let theme = indexjs.get(req);
     ejs.renderFile(
       `./Public/Themes/${theme.name}/${theme.settings.notfound}`,
-      await eval(indexjs.renderdataeval),
+      await indexjs.renderData(req, db, theme),
+
       null,
       function (err, str) {
         delete req.session.newaccount;

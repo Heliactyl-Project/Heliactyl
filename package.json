@@ -5,12 +5,7 @@
   "main": "index.js",
   "author": "Heliactyl-Project / Ghostload",
   "dependencies": {
-    "@keyv/mongo": "^1.2.1",
-    "@keyv/mysql": "^1.1.5",
-    "@keyv/postgres": "^1.0.17",
-    "@keyv/redis": "^2.2.1",
     "@keyv/sqlite": "^3.5.2",
-    "axios": "^0.25.0",
     "chalk": "^4.1.0",
     "cron": "^1.8.2",
     "discord.js": "^12.5.3",
@@ -19,12 +14,12 @@
     "express-session": "^1.17.2",
     "express-ws": "^4.0.0",
     "gradient-string": "^2.0.2",
-    "javascript-obfuscator": "^2.19.1",
+    "javascript-obfuscator": "^4.1.0",
     "keyv": "^4.0.4",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.6",
-    "stripe": "^13.8.0",
     "nodemon": "^3.0.1",
+    "stripe": "^13.8.0",
     "warn": "^1.0.1"
   },
   "scripts": {

@@ -42,44 +42,43 @@ const defaultthemesettings = {
   variables: {}
 };
 
-module.exports.renderdataeval =
-  `(async () => {
-   let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
-	const JavaScriptObfuscator = require('javascript-obfuscator');
+const JavaScriptObfuscator = require('javascript-obfuscator');
 
- 
+async function renderData(req, db, theme) {
+  try {
     let renderdata = {
       req: req,
-      settings: newsettings,
+      settings: settings,
       userinfo: req.session.userinfo,
-      packagename: req.session.userinfo ? await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default : null,
-      extraresources: !req.session.userinfo ? null : (await db.get("extra-" + req.session.userinfo.id) ? await db.get("extra-" + req.session.userinfo.id) : {
-        ram: 0,
-        disk: 0,
-        cpu: 0,
-        servers: 0
-      }),
-		packages: req.session.userinfo ? newsettings.api.client.packages.list[await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default] : null,
-      coins: newsettings.api.client.coins.enabled == true ? (req.session.userinfo ? (await db.get("coins-" + req.session.userinfo.id) ? await db.get("coins-" + req.session.userinfo.id) : 0) : null) : null,
+      packagename: req.session.userinfo ? await db.get("package-" + req.session.userinfo.id) || settings.api.client.packages.default : null,
+      extraresources: !req.session.userinfo ? null : (await db.get("extra-" + req.session.userinfo.id) || { ram: 0, disk: 0, cpu: 0, servers: 0 }),
+      packages: req.session.userinfo ? settings.api.client.packages.list[await db.get("package-" + req.session.userinfo.id) || settings.api.client.packages.default] : null,
+      coins: settings.api.client.coins.enabled == true ? (req.session.userinfo ? (await db.get("coins-" + req.session.userinfo.id) || 0) : null) : null,
       pterodactyl: req.session.pterodactyl,
       theme: theme.name,
       extra: theme.settings.variables,
       addons: theme.settings.addons,
-	    db: db
+      db: db
     };
-    if (newsettings.api.arcio.enabled == true && req.session.arcsessiontoken) {
-      renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(\`
-        let token = "\${req.session.arcsessiontoken}";
-        let everywhat = \${newsettings.api.arcio["afk page"].every};
-        let gaincoins = \${newsettings.api.arcio["afk page"].coins};
-        let arciopath = "\${newsettings.api.arcio["afk page"].path.replace(/\\\\/g, "\\\\\\\\").replace(/"/g, "\\\\\\"")}";
 
-        \${arciotext}
-      \`);
+    if (settings.api.arcio.enabled == true && req.session.arcsessiontoken) {
+      let arciotext = `
+        let token = "${req.session.arcsessiontoken}";
+        let everywhat = ${settings.api.arcio["afk page"].every};
+        let gaincoins = ${settings.api.arcio["afk page"].coins};
+        let arciopath = "${settings.api.arcio["afk page"].path.replace(/\\/g, "\\\\").replace(/"/g, "\\\"")}";`;
+
+      renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(arciotext);
     };
 
     return renderdata;
-  })();`;
+  } catch (error) {
+    console.error('Error rendering data:', error);
+    return null;
+  }
+}
+
+module.exports.renderData = renderData;
 
 // Load database
 
@@ -189,7 +188,7 @@ app.all("*", async (req, res) => {
   if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
     ejs.renderFile(
       `./Public/Themes/${theme.name}/${theme.settings.notfound}`,
-      await eval(indexjs.renderdataeval),
+        await indexjs.renderData(req, db, theme),
       null,
       async function (err, str) {
         delete req.session.newaccount;
@@ -233,7 +232,7 @@ app.all("*", async (req, res) => {
 
         ejs.renderFile(
           `./Public/Themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`,
-          await eval(indexjs.renderdataeval),
+            await indexjs.renderData(req, db, theme),
           null,
           function (err, str) {
             delete req.session.newaccount;
@@ -249,10 +248,10 @@ app.all("*", async (req, res) => {
       });
     return;
   };
-  const data = await eval(indexjs.renderdataeval)
+  const data = await indexjs.renderData(req, db, theme)
   ejs.renderFile(
     `./Public/Themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`,
-    data,
+    await indexjs.renderData(req, db, theme),
     null,
     function (err, str) {
       delete req.session.newaccount;

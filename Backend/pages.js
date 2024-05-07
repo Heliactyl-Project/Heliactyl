@@ -13,7 +13,7 @@ module.exports.load = async function (app, db) {
     if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
       ejs.renderFile(
         `./Public/Themes/${theme.name}/${theme.settings.notfound}`,
-        await eval(indexjs.renderdataeval),
+        await indexjs.renderData(req, db, theme),
         null,
         async function (err, str) {
           delete req.session.newaccount;
@@ -55,7 +55,7 @@ module.exports.load = async function (app, db) {
 
           ejs.renderFile(
             `./Public/Themes/${theme.name}/${theme.settings.index}`,
-            await eval(indexjs.renderdataeval),
+            await indexjs.renderData(req, db, theme),
             null,
             function (err, str) {
               if (err) {
@@ -71,7 +71,7 @@ module.exports.load = async function (app, db) {
     };
     ejs.renderFile(
       `./Public/Themes/${theme.name}/${theme.settings.index}`,
-      await eval(indexjs.renderdataeval),
+      await indexjs.renderData(req, db, theme),
       null,
       function (err, str) {
         if (err) {

@@ -130,6 +130,5 @@ dist
 .pnp.*
 
 # Heliactyl Specific files 
-package-lock.json
 database.sqlite
 settings.json

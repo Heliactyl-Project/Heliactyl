@@ -1,43 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('./components/head') %>
-    <body>
+   <%- include('./components/head') %>
+   <body>
       <div class="container-scroller">
-        <!-- partial:partials/_sidebar.html -->
+      <!-- partial:partials/_sidebar.html -->
       <%- include('./components/sidebar') %>
-        <!-- partial -->
-        <div class="container-fluid page-body-wrapper">
-          <!-- partial:partials/_navbar.html -->
-           <%- include('./components/topnav') %>
-          <!-- partial -->
-          <div class="main-panel">
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+         <!-- partial:partials/_navbar.html -->
+         <%- include('./components/topnav') %>
+         <!-- partial -->
+         <div class="main-panel">
             <div class="content-wrapper">
-            <div class="page-header">
-              <h3 class="page-title"> Earn Coins </h3>
+               <div class="page-header">
+                  <h3 class="page-title"> Earn Coins </h3>
+               </div>
+               <%- include('./components/ads') %>
+               <div class="row">
+                  <div class="col-md-12 grid-margin stretch-card">
+                     <div class="card">
+                        <div class="card-body">
+                           <p> By being on this page, you are supporting the service stay up & running while also earning coins </p>
+                           <p>Every <% if (settings.api.arcio["afk page"].every !== 1) { %><%= settings.api.arcio["afk page"].every %> seconds<% } else { %>second<% } %>, you will get <%= settings.api.arcio["afk page"].coins == 1 ? "a" : settings.api.arcio["afk page"].coins %> coin<%= settings.api.arcio["afk page"].coins == 1 ? "" : "s" %></p>
+                           <p>You will gain coins again in <span id="arciotimer"><%= settings.api.arcio["afk page"].every %></span> seconds</p>
+                           <p>You have gained <span id="arciogainedcoins">0</span> coins this AFK session</p>
+                           <br>
+                           <p>
+                              Earning Status: <br><button type="button" class="btn btn-success btn-rounded btn-icon"><i class="mdi mdi-check"></i></button>
+                              <script>
+                                 <%- arcioafktext %>
+                              </script>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- content-wrapper ends -->
+               </div>
+               <%- include('./components/ads') %>
             </div>
-            <%- include('./components/ads') %>
-              <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                                    <div class="card">
-                    <div class="card-body">
-                                  <p> By being on this page, you are supporting the service stay up & running while also earning coins </p>
-                <p>Every <% if (settings.api.arcio["afk page"].every !== 1) { %><%= settings.api.arcio["afk page"].every %> seconds<% } else { %>second<% } %>, you will get <%= settings.api.arcio["afk page"].coins == 1 ? "a" : settings.api.arcio["afk page"].coins %> coin<%= settings.api.arcio["afk page"].coins == 1 ? "" : "s" %></p>
-                <p>You will gain coins again in <span id="arciotimer"><%= settings.api.arcio["afk page"].every %></span> seconds</p>
-                       <p>You have gained <span id="arciogainedcoins">0</span> coins this AFK session</p>
-<br>
-<p>Earning Status: <br><button type="button" class="btn btn-success btn-rounded btn-icon"><i class="mdi mdi-check"></i></button>
-                  <script>
-                <%- arcioafktext %>
-            </script>
-          </div>
-              </div>
-            </div>
-            <!-- content-wrapper ends -->
-          <%- include('./components/footer') %>
-          </div>
-          <!-- main-panel ends -->
-        </div>
-        <!-- page-body-wrapper ends -->
+            <%- include('./components/footer') %>
+            <!-- main-panel ends -->
+         </div>
+         <!-- page-body-wrapper ends -->
       </div>
       <!-- container-scroller -->
       <!-- plugins:js -->
@@ -59,5 +62,5 @@
       <script src="../../assets/js/typeahead.js"></script>
       <script src="../../assets/js/select2.js"></script>
       <!-- End custom js for this page -->
-    </body>
-  </html>
+   </body>
+</html>

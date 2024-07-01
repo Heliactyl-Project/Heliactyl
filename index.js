@@ -64,13 +64,14 @@ async function renderData(req, db, theme) {
     };
 
     if (settings.api.arcio.enabled == true && req.session.arcsessiontoken) {
-      let arciotext = `
+      let arcioafktext = `
         let token = "${req.session.arcsessiontoken}";
         let everywhat = ${settings.api.arcio["afk page"].every};
         let gaincoins = ${settings.api.arcio["afk page"].coins};
-        let arciopath = "${settings.api.arcio["afk page"].path.replace(/\\/g, "\\\\").replace(/"/g, "\\\"")}";`;
+        let arciopath = "${settings.api.arcio["afk page"].path.replace(/\\/g, "\\\\").replace(/"/g, "\\\"")}";
+        ${arciotext}`;
 
-      renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(arciotext);
+      renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(arcioafktext);
     };
 
     return renderdata;
@@ -250,7 +251,6 @@ app.all("*", async (req, res) => {
       });
     return;
   };
-  const data = await indexjs.renderData(req, db, theme)
   ejs.renderFile(
     `./Public/Themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`,
     await indexjs.renderData(req, db, theme),

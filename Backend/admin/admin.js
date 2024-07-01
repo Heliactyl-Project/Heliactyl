@@ -1,4 +1,4 @@
-const settings = require("../settings.json");
+const settings = require("../../settings.json");
 
 if (settings.pterodactyl) if (settings.pterodactyl.domain) {
     if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
@@ -6,10 +6,10 @@ if (settings.pterodactyl) if (settings.pterodactyl.domain) {
 
 const fetch = require('node-fetch');
 const fs = require("fs");
-const indexjs = require("../index.js");
+const indexjs = require("../../index.js");
 const adminjs = require("./admin.js");
 const ejs = require("ejs");
-const log = require('../Components/log')
+const log = require('../../functions/log.js')
 
 module.exports.load = async function (app, db) {
     app.get("/setcoins", async (req, res) => {

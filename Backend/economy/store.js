@@ -1,9 +1,9 @@
-const indexjs = require("../index.js");
-const adminjs = require("./admin.js");
-const settings = require("../settings.json");
+const indexjs = require("../../index.js");
+const adminjs = require("../admin/admin.js");
+const settings = require("../../settings.json");
 const fs = require("fs");
 const ejs = require("ejs");
-const log = require('../Components/log')
+const log = require('../../functions/log.js')
 
 module.exports.load = async function (app, db) {
   let maxram = null;

@@ -1,5 +1,5 @@
-const settings = require("../settings.json");
-const indexjs = require("../index.js");
+const settings = require("../../settings.json");
+const indexjs = require("../../index.js");
 const ejs = require("ejs");
 const chalk = require("chalk");
 

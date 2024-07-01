@@ -1,11 +1,11 @@
-const settings = require("../settings.json");
+const settings = require("../../settings.json");
 const fetch = require('node-fetch');
-const indexjs = require("../index.js");
-const adminjs = require("./admin.js");
+const indexjs = require("../../index.js");
+const adminjs = require("../admin/admin.js");
 const fs = require("fs");
-const getPteroUser = require('../Components/getPteroUser')
-const Queue = require("../Queue/Main.js")
-const log = require('../Components/log')
+const getPteroUser = require('../../functions/getPteroUser.js')
+const Queue = require("../../Queue/Main.js")
+const log = require('../../functions/log.js')
 
 if (settings.pterodactyl) if (settings.pterodactyl.domain) {
   if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);

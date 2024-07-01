@@ -1,12 +1,12 @@
-const indexjs = require("../index.js");
-const adminjs = require("./admin.js");
+const indexjs = require("../../index.js");
+const adminjs = require("../admin/admin.js");
 const fs = require("fs");
 const ejs = require("ejs");
 const fetch = require('node-fetch');
 const NodeCache = require("node-cache");
-const Queue = require("../Queue/Main.js");
+const Queue = require("../../Queue/Main.js");
 const myCache = new NodeCache({ deleteOnExpire: true, stdTTL: 59 });
-const log = require('../Components/log')
+const log = require('../../functions/log.js')
 
 module.exports.load = async function (app, db) {
   app.get("/api", async (req, res) => {

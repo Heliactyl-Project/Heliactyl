@@ -15,6 +15,8 @@ const chalk = require("chalk");
 const os = require('os');
 const gradient = require('gradient-string');
 const arciotext = require('./System/arciotext')
+const glob = require('fast-glob');
+const path = require('path');
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 if (typeof btoa === 'undefined') {
@@ -172,12 +174,12 @@ app.use(function (req, res, next) {
 
 // Load the API files.
 
-let apifiles = fs.readdirSync('./Backend').filter(file => file.endsWith('.js'));
-
-apifiles.forEach(file => {
-  let apifile = require(`./Backend/${file}`);
-  apifile.load(app, db);
-});
+const router = glob.sync('./Backend/**/*.js');
+  console.log(router); // Log out all Modules ps. Remove before pushing to github.
+  for (const file of router) {
+    const router = require(file);
+    if (typeof router.load === 'function') router.load(app, db);
+  }
 
 app.all("*", async (req, res) => {
   if (req.session.pterodactyl) if (req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) return res.redirect("/login?prompt=none");

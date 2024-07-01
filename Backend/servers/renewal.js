@@ -1,6 +1,6 @@
-const settings = require("../settings.json");
+const settings = require("../../settings.json");
 const { CronJob } = require('cron')
-const getAllServers = require('../Components/getAllServers')
+const getAllServers = require('../../functions/getAllServers')
 const fetch = require('node-fetch')
 
 module.exports.load = async function (app, db) {
@@ -42,6 +42,21 @@ module.exports.load = async function (app, db) {
 
         await db.set("coins-" + req.session.userinfo.id, coins - settings.renewals.cost)
 
+        let unsuspendrequest = await fetch(
+            settings.pterodactyl.domain + "/api/application/servers/" + id + "/unsuspend",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${settings.pterodactyl.key}`
+                }
+            }
+        );
+        
+        if (!unsuspendrequest.ok) {
+            return res.send(`An error has occured while attempting to unsuspend the server. Please contact an administrator.`)
+        }
+
         const newTime = lastRenew + (settings.renewals.delay * 86400000)
         await db.set(`lastrenewal-${req.query.id}`, newTime)
 
@@ -59,18 +74,17 @@ module.exports.load = async function (app, db) {
 
                     if (lastRenew > Date.now()) continue
                     if ((Date.now() - lastRenew) > (settings.renewals.delay * 86400000)) {
-                        // Server hasn't paid for renewal and is due to get deleted (YIKES)
-                        let deletionresults = await fetch(
-                            settings.pterodactyl.domain + "/api/application/servers/" + id,
+                        let suspendresult = await fetch(
+                            settings.pterodactyl.domain + "/api/application/servers/" + id + "/suspend",
                             {
-                                method: "delete",
+                                method: "post",
                                 headers: {
                                     'Content-Type': 'application/json',
                                     "Authorization": `Bearer ${settings.pterodactyl.key}`
                                 }
                             }
                         );
-                        let ok = await deletionresults.ok;
+                        let ok = await suspendresult.ok;
                         if (ok !== true) continue;
                         console.log(`Server with ID ${id} failed renewal and was deleted.`)
                         await db.delete(`lastrenewal-${id}`)
@@ -85,20 +99,35 @@ module.exports.load = async function (app, db) {
 };
 
 function msToDaysAndHours(ms) {
-    const msInDay = 86400000
-    const msInHour = 3600000
+    const msInDay = 86400000;
+    const msInHour = 3600000;
+    const msInMinute = 60000;
 
-    const days = Math.floor(ms / msInDay)
-    const hours = Math.round((ms - (days * msInDay)) / msInHour * 100) / 100
+    const days = Math.floor(ms / msInDay);
+    const hours = Math.floor((ms % msInDay) / msInHour);
+    const minutes = Math.round(((ms % msInDay) % msInHour) / msInMinute);
 
-    let pluralDays = `s`
+    let pluralDays = 's';
     if (days === 1) {
-        pluralDays = ``
-    }
-    let pluralHours = `s`
-    if (hours === 1) {
-        pluralHours = ``
+        pluralDays = '';
     }
 
-    return `${days} day${pluralDays} and ${hours} hour${pluralHours}`
+    let pluralHours = 's';
+    if (hours === 1) {
+        pluralHours = '';
+    }
+
+    let pluralMinutes = 's';
+    if (minutes === 1) {
+        pluralMinutes = '';
+    }
+
+    if (days === 0) {
+        if (hours === 0) {
+            return `${minutes}m left!`;
+        }
+        return `${hours}h ${minutes}m`;
+    }
+
+    return `${days}d ${hours}h ${minutes}m`;
 }

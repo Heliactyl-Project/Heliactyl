@@ -1,7 +1,7 @@
-const settings = require("../settings.json");
+const settings = require("../../settings.json");
 const fs = require('fs');
 
-const indexjs = require("../index.js");
+const indexjs = require("../../index.js");
 const stripe = require('stripe')(settings.stripe.key);
 
 module.exports.load = async function (app, db) {

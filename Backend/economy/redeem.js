@@ -1,4 +1,4 @@
-const indexjs = require("../index.js");
+const indexjs = require("../../index.js");
 const fs = require("fs");
 
 module.exports.load = async function(app, db) {

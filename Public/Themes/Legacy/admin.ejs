@@ -68,27 +68,22 @@
                               </div>
               </div>
               <script>
-                // Define the current version of the application
                 const currentver = "<%= settings.version.replace(/\"/g, '\\\\"') %>";
-              
 
-              
                 // Fetch the latest release from the GitHub repository
                 fetch(`https://api.github.com/repos/Heliactyl-Project/Heliactyl/releases/latest`)
                   .then(res => res.json())
                   .then(data => {
-                    const latestver = data.tag_name.replace(/^v/, ''); // Remove 'v' from tag name if present
+                    const latestver = data.tag_name.replace(/^v/, '');
                     const latestversionElement = document.getElementById("latestversion");
               
                     if (latestver === currentver) {
                       latestversionElement.innerHTML = `
                         <span>You are running Heliactyl version <code style="color: #007fcc">v${currentver}</code>. Heliactyl is up-to-date!</span><br>
-                        <p class="text-center h2 text-danger">Please note you are using a Test Release.<br> Do <strong>NOT</strong> use a Test Release for Production.</p>
                       `;
                     } else {
                       latestversionElement.innerHTML = `
-                        <span>Heliactyl is <b>not up-to-date!</b> The latest version is <code style="color: #007fcc">v${latestver}</code> and you are currently running version <code style="color: #007fcc">v${currentver}</code>.</span><br>
-                        <p class="text-center h2 text-danger">Please note you are using a Test Release.<br> Do <strong>NOT</strong> use a Test Release for Production.</p>
+                        <span>Heliactyl is <b style="color: #E80A0A">not up-to-date!</b> The latest version is <code style="color: #007fcc">v${latestver}</code> and you are currently running version <code style="color: #007fcc">v${currentver}</code>.</span><br>
                       `;
                     }
                   })
@@ -103,7 +98,7 @@
                       <h4 class="card-title">Heliactyl Information</h4>
                       <form class="forms-sample">
                         <div class="form-group">
-                          <a href="https://git.g-hostload.ml/Heliactyl/Heliactyl/src/branch/master"
+                          <a href="https://github.com/Heliactyl-Project/Heliactyl"
                             class="btn btn-primary btn-lg"><i class="fa-brands fa-git fa-xl"></i> &nbsp; View latest
                             version</a> <a href="https://discord.gg/pQDr78pACr" class="btn btn-primary btn-lg"><i
                               class="fa-brands fa-discord fa-xl"></i> &nbsp; Get support</a>

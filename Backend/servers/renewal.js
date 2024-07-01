@@ -93,7 +93,7 @@ module.exports.load = async function (app, db) {
             })
             console.log('Renewal check over!')
         }
-    }, null, true, 'Europe/London')
+    }, null, true, settings.renewals.Tinmezone)
         .start()
 
 };

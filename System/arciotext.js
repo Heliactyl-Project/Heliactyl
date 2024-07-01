@@ -34,39 +34,5 @@ setInterval(
   }, 1000
 )
 
-setInterval(function() {
-  arcdetecter();
 
-  function arcdetecter() {
-    let iframe = document.getElementById('arc-widget-launcher-iframe');
-    if (iframe == null) {
-      setTimeout(() => {
-        arcdetecter()
-      }, 50);
-    } else {
-      let innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-      setTimeout(() => {
-        getarcstatus(innerDoc)
-      }, 500);
-    };
-  };
-
-  function getarcstatus(innerDoc) {
-    let arcwidgetdiv = innerDoc.getElementById("launcher")
-    if (arcwidgetdiv == null) {
-      setTimeout(() => {
-        arcdetecter()
-      }, 50);
-    } else {
-      let arcwidgetstatus = arcwidgetdiv.className;
-      if (arcwidgetstatus == "is-opted-out") {
-        window.location.href = "arcioerror";
-      } else if (arcwidgetstatus == "") {
-        return undefined
-      } else {
-
-      };
-    };
-  };
-}, 1000);
 `;

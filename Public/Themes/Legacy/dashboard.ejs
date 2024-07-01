@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./components/head') %>
+  <body>
+    <div style="background-color: #111319" class="container-scroller">
+      <!-- partial:partials/_sidebar.html -->
+      <%- include('./components/sidebar') %>
+      <!-- partial -->
+      <div style="background-color: #111319" class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_navbar.html -->
+        <%- include('./components/topnav') %>
+        <!-- partial -->
+        <div style="background-color: #111319" class="main-panel">
+          <div style="background-color: #111319" class="content-wrapper">
+	<%- include('./announcements/announcement') %>
+           <h2>Dashboard</h2>
+           <p class="text-gray">View your resources & other things here.</p>
+            <%- include('./components/alert') %>
+            <% if (req.query.err == "ALREADY_OPEN") { %>
+                <div class="alert">
+                	You can't open multiple tabs!
+            	</div>
+            <% } else if (req.query.err === "CANNOTAFFORDRENEWAL") { %>
+              <div class="alert">
+                You need at least <%= settings.renewals.cost %> coins to purchase a server renewal!
+            </div>
+            <% } if (req.query.success === 'RENEWED') { %>
+              <div class="alert" style="background-color: green;">
+                Succesfully purchased renewal for server!
+            </div>
+            <% } if (req.session.newaccount || req.session.password) { %>
+            <div style="background-color: #007fcc; border-radius: 15px" class="alert">
+                <% if (req.session.newaccount) { %>
+                    Welcome! You are a first time user<br>
+                <% } %>
+                <% if (req.session.password) { %>
+                    Your password has been changed to <%= req.session.password %>, however if you do not save that then you can just reset it via the "Account Settings" page
+                <% } else { %>
+                    Please head over to Settings to create a password.
+                <% } %>
+            </div>
+        <% } %>
+        <%- include('./components/status') %>
+        <div class="row ">
+          <div class="col-12 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Your Servers</h4>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th> Server Name </th>
+                        <th> Renewal Timer </th>
+                        <th> CPU </th>
+                        <th> RAM </th>
+                        <th> Disk </th>
+                        <th> Options </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+                          <tr>
+                          <td> No servers found. </td>
+                          </tr>
+                        <% } else { %>
+                          <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+                            <tr>
+                            <td>
+                              <span class="pl-2"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></span>
+                            </td>
+                            <td><code><span id="<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Fetching...</span></code></td>
+                            <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu %>% </td>
+                            <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory %>MB </td>
+                            <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk %>MB </td>
+                            <td>
+                            <a role="button" class="btn btn-outline-warning" href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>">Link</a>
+                            <% if (settings.renewals.status) { %>
+                            <a role="button" class="btn btn-outline-info" href="/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Renew</a>
+                            <% } %>
+                            <a role="button" class="btn btn-outline-primary" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
+                            <a role="button" class="btn btn-outline-danger" onclick="if (confirm('Please confirm you want to delete this server, the data cannot be retrieved after it has been deleted.')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }">Delete</a>
+                            </td>
+                            </tr>
+                                <script>
+ 				fetch("/api/renewalstatus?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>")
+ 				.then(res => Promise.resolve(res.json()).then(renewdate => {
+ 				if (renewdate.text == renewdate.text) {
+				document.getElementById("<%= pterodactyl.relationships.servers.data[i].attributes.id %>").innerHTML = `<span><code>${renewdate.text}</code>`;
+				};
+				}));
+                              </script>
+                          <% } %>
+                        <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+          <!-- content-wrapper ends -->
+          <%- include('./components/footer') %>
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <%- include('./components/scripts') %>
+  </body>
+</html>

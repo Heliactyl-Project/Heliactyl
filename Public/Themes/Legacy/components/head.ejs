@@ -1,0 +1,34 @@
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><%= extra.home.name %></title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/assets/legacyv1/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/assets/legacyv1/vendors/css/vendor.bundle.base.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/assets/legacyv1/vendors/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="/assets/legacyv1/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/assets/legacyv1/vendors/owl-carousel-2/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/legacyv1/vendors/owl-carousel-2/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/assets/legacyv1/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="https://cdn.discordapp.com/attachments/881207010417315861/948924037176901642/Copy_of_H_33.png" />
+    <link rel="icon" type="image/png" href="<%= extra.faviconlink %>">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <link href="https://fonts.cdnfonts.com/css/whitney" rel="stylesheet">
+    <% if (settings.api.arcio.enabled == true) { %>
+         <script async src="https://arc.io/widget.min.js#<%= settings.api.arcio.widgetid %>"></script>
+    <% } %>
+</head>
+<body style="font-family: 'Whitney-Semibold', sans-serif;">
+<div class="nanobar my-class" id="my-id" style="position: fixed;">
+    <div class="bar"></div>
+</div>

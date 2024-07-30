@@ -31,7 +31,7 @@ module.exports = (action, message) => {
             ]
         })
     })
-    .catch(() => {})
+        .catch(() => { })
 }
 
 function hexToDecimal(hex) {

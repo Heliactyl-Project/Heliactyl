@@ -2,7 +2,7 @@
   "version": "13.3.0",
   "name": "Heliactyl",
   "icon": "https://media.discordapp.net/attachments/1000768414220038204/1157719211678904420/Heliactylv13.png",
-  "defaulttheme": "Heliactyl",
+  "defaulttheme": "Default",
   "pterodactyl": {
     "domain": "Pterodactyl URL",
     "key": "Pterodactyl Client/Admin API Key with all permissions"

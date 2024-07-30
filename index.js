@@ -1,5 +1,5 @@
 //
-// Heliactyl 13.3.0, Codename Lithium
+// Heliactyl 14 ES/ID, Codename Beryllium
 // 
 //  * Copyright Ghostload
 //  * Please read the "License" file
@@ -17,6 +17,9 @@ const gradient = require('gradient-string');
 const arciotext = require('./System/arciotext')
 const glob = require('fast-glob');
 const path = require('path');
+const packageJson = require('./package.json');
+const figlet = require('figlet');
+
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 if (typeof btoa === 'undefined') {
@@ -121,32 +124,36 @@ app.use(express.json({
   verify: undefined
 }));
 
-const listener = app.listen(settings.website.port, function () {
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(chalk.white("                                                                   "));
-  console.log(gradient.retro("\u2588\u2588\u2557  \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2557     \u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2557   \u2588\u2588\u2557\u2588\u2588\u2557     \r\n\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D\u2588\u2588\u2551     \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u2550\u2588\u2588\u2554\u2550\u2550\u255D\u255A\u2588\u2588\u2557 \u2588\u2588\u2554\u255D\u2588\u2588\u2551     \r\n\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2551     \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551        \u2588\u2588\u2551    \u255A\u2588\u2588\u2588\u2588\u2554\u255D \u2588\u2588\u2551     \r\n\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u255D  \u2588\u2588\u2551     \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2551        \u2588\u2588\u2551     \u255A\u2588\u2588\u2554\u255D  \u2588\u2588\u2551     \r\n\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u255A\u2588\u2588\u2588\u2588\u2588\u2588\u2557   \u2588\u2588\u2551      \u2588\u2588\u2551   \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\r\n\u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D \u255A\u2550\u2550\u2550\u2550\u2550\u255D   \u255A\u2550\u255D      \u255A\u2550\u255D   \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D"));
-  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-  console.log("🚀 Welcome to Heliactyl 13.3!🚀");
-  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-  console.log("🔧 Server Specifications:");
-  console.log(`   - CPU: ${os.cpus()[0].model} (${os.cpus().length} Cores)`);
-  console.log(`   - RAM: ${Math.round(os.totalmem() / (1024 ** 3))}GB`);
-  console.log(`   - Disk: ${Math.round(os.totalmem() / (1024 ** 3))}GB`);
-  console.log(`   - OS: ${os.type()} ${os.release()}`);
-  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-  console.log("📝 Sidenote: If you ever encounter a 502 Bad Gateway error,");
-  console.log("   remember it's likely a proxy issue, not Heliactyl itself.");
-  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-  console.log("📧 Need assistance? Feel free to contact us via our Discord Server: https://discord.gg/SE8GvAckWN");
-  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+// replaced with addon loader later on
+const addons = [
+  { name: 'Example Addon 1', version: '1.0.0', status: chalk.green('Active') },
+  { name: 'Example Addon 2', version: '1.0.0', status: chalk.red('Error') }
+];
+const listener = app.listen(settings.website.port, () => {
+  console.log(`Server is running on port ${settings.website.port}`);
+  
+  // Basic Startup Information
+  let Gradient = gradient(['#ed4566', '#f9b9a1']);
+  console.log('===================================');
+  console.log(Gradient(figlet.textSync('Heliactyl ', { font: 'ANSI Shadow', horizontalLayout: 'full' })));
+  console.log('===================================');
+  console.log(`Version: ${packageJson.version}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Port: ${settings.website.port}`);
+  console.log(`System Platform: ${os.platform()} ${os.arch()}`);
+  console.log(`System Uptime: ${os.uptime()} seconds`);
+  console.log(`Total Memory: ${Math.round(os.totalmem() / (1024 * 1024))} MB`);
+  console.log(`Free Memory: ${Math.round(os.freemem() / (1024 * 1024))} MB`);
+  
+  // Addons Information
+  console.log('Loaded Addons:');
+  addons.forEach(addon => {
+    console.log(`  - ${addon.name} (Version: ${addon.version}, Status: ${addon.status})`);
+  });
 
+  console.log('===================================');
 });
+
 
 var cache = false;
 app.use(function (req, res, next) {

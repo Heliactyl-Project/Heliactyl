@@ -84,5 +84,5 @@ module.exports.load = async function (app, db) {
       });
   });
 
-  app.use('/assets', express.static('./assets'));
+  app.use('/assets', express.static('./Public/Assets'));
 };

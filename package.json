@@ -1,10 +1,12 @@
 {
   "name": "heliactyl",
-  "version": "13.3.0",
+  "version": "14.0.0-ES",
   "description": "Manage your Pterodactyl Users and their Servers with ease",
   "main": "index.js",
   "author": "Heliactyl-Project / Ghostload",
-  "contributors": [""],
+  "contributors": [
+    ""
+  ],
   "dependencies": {
     "@keyv/sqlite": "^3.5.2",
     "chalk": "^4.1.0",
@@ -15,6 +17,7 @@
     "express-session": "^1.17.2",
     "express-ws": "^4.0.0",
     "fast-glob": "^3.3.2",
+    "figlet": "^1.7.0",
     "gradient-string": "^2.0.2",
     "javascript-obfuscator": "^4.1.0",
     "keyv": "^4.0.4",

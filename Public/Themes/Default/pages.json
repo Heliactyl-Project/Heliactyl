@@ -86,11 +86,12 @@
          }
       }
    },
-   "addons": {
-      "Example": {
+   "extensions": {
+      "Example-Extension": {
          "enabled": true,
          "name": "Demo Addon",
-         "madeby": "Ghostload"
+         "made-by": "Ghostload",
+         "version": 1
       }
    }
 }

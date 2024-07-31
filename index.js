@@ -113,7 +113,12 @@ const indexjs = require("./index.js");
 
 module.exports.app = app;
 
-app.use(session({ secret: settings.website.secret, resave: false, saveUninitialized: false }));
+app.use(session({ 
+  secret: settings.website.secret, 
+  name: 'sauth_sid',
+  resave: false, 
+  saveUninitialized: false 
+}));
 
 app.use(express.json({
   inflate: true,
@@ -131,7 +136,7 @@ const addons = [
 ];
 const listener = app.listen(settings.website.port, () => {
   console.log(`Server is running on port ${settings.website.port}`);
-  
+
   // Basic Startup Information
   let Gradient = gradient(['#ed4566', '#f9b9a1']);
   console.log('===================================');
@@ -144,7 +149,7 @@ const listener = app.listen(settings.website.port, () => {
   console.log(`System Uptime: ${os.uptime()} seconds`);
   console.log(`Total Memory: ${Math.round(os.totalmem() / (1024 * 1024))} MB`);
   console.log(`Free Memory: ${Math.round(os.freemem() / (1024 * 1024))} MB`);
-  
+
   // Addons Information
   console.log('Loaded Addons:');
   addons.forEach(addon => {
@@ -183,11 +188,11 @@ app.use(function (req, res, next) {
 // Load the API files.
 
 const router = glob.sync('./Backend/**/*.js');
-  console.log(router); // Log out all Modules ps. Remove before pushing to github.
-  for (const file of router) {
-    const router = require(file);
-    if (typeof router.load === 'function') router.load(app, db);
-  }
+console.log(router); // Log out all Modules ps. Remove before pushing to github.
+for (const file of router) {
+  const router = require(file);
+  if (typeof router.load === 'function') router.load(app, db);
+}
 
 app.all("*", async (req, res) => {
   if (req.session.pterodactyl) if (req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) return res.redirect("/login?prompt=none");
@@ -198,7 +203,7 @@ app.all("*", async (req, res) => {
   if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
     ejs.renderFile(
       `./Public/Themes/${theme.name}/${theme.settings.notfound}`,
-        await indexjs.renderData(req, db, theme),
+      await indexjs.renderData(req, db, theme),
       null,
       async function (err, str) {
         delete req.session.newaccount;
@@ -242,7 +247,7 @@ app.all("*", async (req, res) => {
 
         ejs.renderFile(
           `./Public/Themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`,
-            await indexjs.renderData(req, db, theme),
+          await indexjs.renderData(req, db, theme),
           null,
           function (err, str) {
             delete req.session.newaccount;

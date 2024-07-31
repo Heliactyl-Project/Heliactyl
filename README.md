@@ -26,6 +26,11 @@ Please consider keeping it. :)
 
 <hr>
 
+
+# Demo
+
+You can find a Demo Instance at https://demo.client.heliactyl.com or the dev branch at https://dev.client.heliactyl.com
+
 # Installation
 
 Moved to our Website https://docs.heliactyl.com

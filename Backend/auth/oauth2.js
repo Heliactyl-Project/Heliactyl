@@ -269,17 +269,28 @@ module.exports.load = async function (app, db) {
               req.session.newaccount = true;
               req.session.password = genpassword;
             } else {
-              let accountlistjson = await fetch(
-                settings.pterodactyl.domain + "/api/application/users?include=servers&filter[email]=" + encodeURIComponent(userinfo.email),
-                {
-                  method: "get",
-                  headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${settings.pterodactyl.key}`
+              try {
+                let accountlistjson = await fetch(
+                  settings.pterodactyl.domain + "/api/application/users?include=servers&filter[email]=" + encodeURIComponent(userinfo.email),
+                  {
+                    method: "get",
+                    headers: {
+                      'Content-Type': 'application/json',
+                      "Authorization": `Bearer ${settings.pterodactyl.key}`
+                    }
                   }
+                );
+
+                if (!accountlistjson.ok) {
+                  throw new Error(`HTTP error! status: ${accountlistjson.status}`);
                 }
-              );
-              let accountlist = await accountlistjson.json();
+
+                let accountlist = await accountlistjson.json();
+                console.log(accountlist);
+              } catch (error) {
+                console.error('Error fetching account list:', error);
+                return res.send("Failed to fetch account details from Panel. Contact ");
+              }
               let user = accountlist.data.filter(acc => acc.attributes.email == userinfo.email);
               if (user.length == 1) {
                 let userid = user[0].attributes.id;

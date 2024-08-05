@@ -8,12 +8,14 @@
     ""
   ],
   "dependencies": {
+    "@express-rate-limit/cluster-memory-store": "^0.3.0",
     "@keyv/sqlite": "^3.5.2",
     "chalk": "^4.1.0",
     "cron": "^1.8.2",
     "discord.js": "^12.5.3",
     "ejs": "^3.1.7",
     "express": "^4.17.1",
+    "express-rate-limit": "^7.4.0",
     "express-session": "^1.17.2",
     "express-ws": "^4.0.0",
     "fast-glob": "^3.3.2",

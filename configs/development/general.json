@@ -1,0 +1,13 @@
+{
+    "version": "14.0.0-ES",
+    "name": "Heliactyl",
+    "icon": "https://cdn.discordapp.com/icons/956572204101951498/273aab8c0840a2a498846aae618182b9.webp",
+    "defaulttheme": "Default",
+    "port": 8000,
+    "secret": "Example Secret",
+    "database": "sqlite://database.sqlite",
+    "pterodactyl": {
+        "domain": "Pterodactyl URL",
+        "key": "Pterodactyl Client/Admin API Key with all permissions"
+    }
+}

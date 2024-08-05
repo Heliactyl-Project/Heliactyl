@@ -1,0 +1,7 @@
+{
+    "enabled": false,
+    "note": "The key is the stripe API key and the coins is the amount per £1. If the stripe API key is invalid and stripe purchases are enabled, Heliactyl will crash when attempting to do transactions.",
+    "key": "YOUR_STRIPE_KEY",
+    "currency": "EUR",
+    "coins": 100
+}

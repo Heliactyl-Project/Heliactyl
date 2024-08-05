@@ -1,0 +1,26 @@
+{
+    "status": false,
+    "webhook": "Discord Webhook URL",
+    "actions": {
+        "user": {
+            "signup": true,
+            "created server": true,
+            "gifted coins": true,
+            "modify server": true,
+            "buy servers": true,
+            "buy ram": true,
+            "buy cpu": true,
+            "buy disk": true
+        },
+        "admin": {
+            "set coins": true,
+            "add coins": true,
+            "set resources": true,
+            "set plan": true,
+            "create coupon": true,
+            "revoke coupon": true,
+            "remove account": true,
+            "view ip": true
+        }
+    }
+}

@@ -19,6 +19,8 @@ const glob = require('fast-glob');
 const path = require('path');
 const packageJson = require('./package.json');
 const figlet = require('figlet');
+const { rateLimit } = require('express-rate-limit')
+const { ClusterMemoryStorePrimary } = '@express-rate-limit/cluster-memory-store'
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -113,11 +115,11 @@ const indexjs = require("./index.js");
 
 module.exports.app = app;
 
-app.use(session({ 
-  secret: settings.website.secret, 
+app.use(session({
+  secret: settings.website.secret,
   name: 'sauth_sid',
-  resave: false, 
-  saveUninitialized: false 
+  resave: false,
+  saveUninitialized: false
 }));
 
 app.use(express.json({
@@ -128,6 +130,8 @@ app.use(express.json({
   type: 'application/json',
   verify: undefined
 }));
+
+app.set("trust proxy", true);
 
 // replaced with addon loader later on
 const addons = [
@@ -160,35 +164,27 @@ const listener = app.listen(settings.website.port, () => {
 });
 
 
-var cache = false;
-app.use(function (req, res, next) {
-  let manager = (JSON.parse(fs.readFileSync("./settings.json").toString())).api.client.ratelimits;
-  if (manager[req._parsedUrl.pathname]) {
-    if (cache == true) {
-      setTimeout(async () => {
-        let allqueries = Object.entries(req.query);
-        let querystring = "";
-        for (let query of allqueries) {
-          querystring = querystring + "&" + query[0] + "=" + query[1];
-        }
-        querystring = "?" + querystring.slice(1);
-        res.redirect((req._parsedUrl.pathname.slice(0, 1) == "/" ? req._parsedUrl.pathname : "/" + req._parsedUrl.pathname) + querystring);
-      }, 1000);
-      return;
-    } else {
-      cache = true;
-      setTimeout(async () => {
-        cache = false;
-      }, 1000 * manager[req._parsedUrl.pathname]);
-    }
-  };
-  next();
-});
+const limiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  limit: 100, // Limit each IP to 100 requests per `window` (here, per 5 minutes).
+  standardHeaders: 'draft-7', // draft-7: combined `RateLimit` header
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  validate: {trustProxy: false},
+  // store: new ClusterMemoryStoreWorker(),  // Later switching to Clustering the entire thing thereby requiring ClusterMemoryStore or smth similar
+})
+
+function RateLimiter(req, res, next) {
+  // Skipping the Assets route because most pages or themes probably will load a buch of files depleting the ratelimit
+  if (req.path.startsWith('/assets/')) {
+    return next();
+  }
+  limiter(req, res, next);
+}
+app.use(RateLimiter)
+
 
 // Load the API files.
-
 const router = glob.sync('./Backend/**/*.js');
-console.log(router); // Log out all Modules ps. Remove before pushing to github.
 for (const file of router) {
   const router = require(file);
   if (typeof router.load === 'function') router.load(app, db);

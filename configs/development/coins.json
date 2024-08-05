@@ -1,0 +1,40 @@
+{
+    "enabled": true,
+    "store": {
+        "_comment": "The cost and per is not intended to used with 0. Make sure coins are enabled too, or else there will be some errors and bugs.",
+        "enabled": true,
+        "ram": {
+            "cost": 100,
+            "per": 1024
+        },
+        "disk": {
+            "cost": 100,
+            "per": 1024
+        },
+        "cpu": {
+            "cost": 100,
+            "per": 100
+        },
+        "servers": {
+            "cost": 100,
+            "per": 1
+        }
+    },
+    "linkvertise": {
+        "userid": "10000",
+        "coins": 5
+    },
+    "AFK": {
+        "enabled": true,
+        "afk_page": {
+            "_comment": "Make sure coins are enabled if you choose to enable this option!",
+            "enabled": true,
+            "_comment_2": "If you change the path, you need to restart for it to take full effect.",
+            "path": "afkwspath",
+            "_comment_3": "This afk page will give the users [coins variable] coins every [every variable] seconds.",
+            "every": 30,
+            "_comment_4": "The coins variable is meant to not be under 1. There may be bugs if the coins variable is less than 1.",
+            "coins": 2
+        }
+    }
+}

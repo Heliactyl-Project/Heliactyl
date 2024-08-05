@@ -1,0 +1,8 @@
+{
+    "enabled": false,
+    "note": "The clientId and clientSecret are the PayPal API credentials. The currency defines the transaction currency, and coins determine the amount per £1. If the credentials are invalid and PayPal purchases are enabled, the application may experience errors when processing transactions.",
+    "clientId": "YOUR_PAYPAL_CLIENT_ID",
+    "clientSecret": "YOUR_PAYPAL_CLIENT_SECRET",
+    "currency": "EUR",
+    "coins": 100
+}

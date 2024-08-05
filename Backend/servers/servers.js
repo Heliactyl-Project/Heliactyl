@@ -1,3 +1,9 @@
+/**
+ * Todo:
+ * - Restructure this entirely
+ * - Improve performance and keep rate limiting in mind
+ * - Find a more efficient way to manage the queue maybe using a new db?
+ */
 const settings = require("../../settings.json");
 const fetch = require('node-fetch');
 const indexjs = require("../../index.js");

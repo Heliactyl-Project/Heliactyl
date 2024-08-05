@@ -1,3 +1,9 @@
+/**
+ * Todo:
+ * - Comment and explain everything (>-<)
+ * - Improve performance (maybe?)
+ * - Finally Removing Arc.io? 
+ */
 const indexjs = require("../index.js");
 const ejs = require("ejs");
 const express = require("express");

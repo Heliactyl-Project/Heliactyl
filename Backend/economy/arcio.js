@@ -1,3 +1,7 @@
+/**
+ * Todo:
+ * - either Rework this entirely or scrap it
+ */
 const settings = require("../../settings.json");
 const indexjs = require("../../index.js");
 const ejs = require("ejs");

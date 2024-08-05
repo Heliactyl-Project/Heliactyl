@@ -1,3 +1,10 @@
+/**
+ * Todo:
+ * - Rework this entirely
+ * - Improve performance and keep rate limiting in mind
+ * - Find a way to manage timezones more efficiently
+ */
+
 const settings = require("../../settings.json");
 const { CronJob } = require('cron')
 const getAllServers = require('../../functions/getAllServers')

@@ -1,3 +1,7 @@
+/**
+ * Todo:
+ * - Readding Google reCaptcha support or Cloudflare Turnstile 
+ */
 const settings = require('../../settings.json')
 
 module.exports.load = async function (app, db) {

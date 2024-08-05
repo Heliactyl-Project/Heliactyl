@@ -1,3 +1,9 @@
+/**
+ * Todo:
+ * - Minor refactoring
+ * - Modularity?
+ * - Password store and frontend display? (with a simple memcache?)
+ */
 const settings = require("../settings.json");
 const fs = require('fs');
 

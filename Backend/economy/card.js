@@ -1,3 +1,9 @@
+/**
+ * Todo:
+ * - Rework this entirely for a more modern version of stripe's api
+ * - PayPal or maybe an other Payment Provider aswell?
+ * - Precalc fees?
+ */
 const settings = require("../../settings.json");
 const fs = require('fs');
 

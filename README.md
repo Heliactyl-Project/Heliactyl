@@ -1,9 +1,10 @@
-![header](https://capsule-render.vercel.app/api?type=transparent&height=200&color=gradient&text=Heliactyl-nl-%20&textBg=false&section=header&reversal=false&animation=fadeIn&fontColor=abaef2&desc=V14&descAlign=60&descAlignY=72&descSize=30&fontAlignY=50&fontAlign=50&fontSize=90)
+![header](https://capsule-render.vercel.app/api?type=transparent&height=200&color=gradient&text=Heliactyl-nl-%20&textBg=false&section=header&reversal=false&animation=fadeIn&fontColor=abaef2&desc=V14-Beta1&descAlign=60&descAlignY=72&descSize=30&fontAlignY=50&fontAlign=50&fontSize=90)
 # v14-ES/ID (Engineering (Concept) Sample / In Development)
 
 > [!WARNING]  
-> This is an in development version of Heliactyl anything could break and probably will break.
-> so dont use it in production! I repeat `DONT` use it in production
+> This is an in development version of Heliactyl anything could and probably will break.
+> So dont use it in production! I repeat `DONT` use it in production
+> You have been Warned
 
 <hr>
 
